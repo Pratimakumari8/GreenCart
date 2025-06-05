@@ -2,6 +2,7 @@ import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import stripe from "stripe"
 import User from "../models/User.js"
+
 //Place Order COD:/api/order/cod
 export const placeOrderCOD = async(req, res)=>{
     try{
@@ -44,8 +45,8 @@ export const placeOrderStripe = async(req, res)=>{
                 name: product.name,
                 price: product.offerPrice,
                 quantity: item.quantity,
-            })
-            return(await acc) + product.offerPrice*item.quantity;
+            });
+            return (await acc) + product.offerPrice*item.quantity;
         },0)
         //Add Tax Charge(2%)
         amount+= Math.floor(amount*0.02);
@@ -120,7 +121,7 @@ switch(event.type){
         await User.findByIdAndUpdate(userId, {cartItems:{}});
         break;
         }
-       case "payment_intent.succeeded":{
+       case "payment_intent.payment_failed":{
         const paymentIntent = event.data.object;
         const paymentIntentId = paymentIntent.id;
         //Getting Session Metadata
