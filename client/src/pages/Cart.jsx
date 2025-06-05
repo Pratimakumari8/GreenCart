@@ -33,7 +33,7 @@ const Cart = () => {
   };
   const getUserAddress = async() =>{
     try{
-      const {data} = await axios.get('/api/address/get');
+      const {data} = await axios.get('/api/address/get' );
       if(data.success){
         setAddresses(data.addresses)
         if(data.addresses.length>0){
